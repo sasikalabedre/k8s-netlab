@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-ingress
+  namespace: netlab
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - netlab.local
+    secretName: netlab-tls
+  rules:
+  - host: netlab.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-svc
+            port:
+              number: 80
